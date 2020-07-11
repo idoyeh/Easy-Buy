@@ -1,0 +1,614 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8" />
+    <title>Easy Buy</title>
+    <script src="lib/jquery.js"></script>
+    <link href="lib/w3.css" rel="stylesheet" />
+    <link href="lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!---------------------------------------------------------------->
+    <!--style-->
+    <style>
+
+        @font-face {
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: Raleway;
+            color: #777;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            /*background-color: rgba(230, 230, 230, 0.8);*/
+        }
+
+        .nav ul {
+            margin: 0;
+        }
+
+        .nav li {
+            display: inline;
+        }
+
+        .nav a {
+            display: inline-block;
+            padding: .5em;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav input {
+            display: inline-block;
+            padding: .5em;
+            font-size: 18px;
+            color: white;
+            background-color: transparent;
+            border: none;
+            text-decoration: none;
+        }
+
+        .main-nav {
+            text-align: center;
+            font-size: 1.1em;
+            font-weight: lighter;
+            border-bottom: 1px solid rgba(255, 255, 255, .3)
+        }
+
+            .main-nav li {
+                padding: 0 5%;
+            }
+
+        .nav a:hover {
+            background-color: rgba(255, 255, 255, .3)
+        }
+
+        .nav input:hover {
+            background-color: rgba(255, 255, 255, .3)
+        }
+
+        .main-header {
+            background-color: rgba(0, 0, 0, .6);
+            background-image: url("Images/Header Background.jpg");
+            background-blend-mode: multiply;
+            background-size: cover;
+            padding-bottom: 30px;
+        }
+
+        .band-name {
+            text-align: center;
+            margin: 0;
+            font-size: 4em;
+            font-weight: normal;
+            color: white;
+        }
+
+        .band-name-large {
+            font-size: 8em;
+        }
+
+        .content-section {
+            margin: 1em;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1.5em;
+        }
+
+        .section-header {
+            font-family: "Metal Mania";
+            font-weight: normal;
+            color: #333;
+            text-align: center;
+            font-size: 2.5em;
+        }
+
+        .about-band-image {
+            float: left;
+            height: 200px;
+            width: 200px;
+            margin: 15px;
+            border-radius: 50%;
+        }
+
+        .main-footer {
+            background-color: #56CCF2;
+            color: white;
+            padding: .25em 0;
+        }
+
+        .main-footer-container {
+            display: flex;
+            align-items: center;
+        }
+
+            .main-footer-container ul {
+                flex-grow: 1;
+                text-align: end;
+            }
+
+        .footer-nav li {
+            padding: 0 .5em;
+        }
+
+        .footer-nav img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .btn {
+            text-align: center;
+            vertical-align: middle;
+            padding: .67em .67em;
+            cursor: pointer;
+        }
+
+        .btn-header {
+            margin: .5em 15% 2em 15%;
+            color: white;
+            border: 2px solid #2D9CDB;
+            background-color: rgba(255, 255, 255, .1);
+            border-radius: 0;
+            font-size: 1.5em;
+            font-weight: lighter;
+            padding-left: 2em;
+            padding-right: 2em;
+        }
+
+            .btn-header:hover {
+                background-color: rgba(255, 255, 255, .3);
+            }
+
+        .btn-play {
+            display: block;
+            margin: 0 auto;
+            color: #2D9CDB;
+            font-size: 4em;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            padding: 0;
+            text-align: center;
+        }
+
+        .btn-primary {
+            color: white;
+            background-color: #56CCF2;
+            border: none;
+            border-radius: .3em;
+            font-weight: bold;
+        }
+
+            .btn-primary:hover {
+                background-color: #2D9CDB;
+            }
+
+        .tour-row {
+            border-bottom: 1px solid black;
+            padding-bottom: 1em;
+            margin-bottom: 1em;
+        }
+
+            .tour-row:last-child {
+                border: none;
+            }
+
+        .tour-item {
+            display: inline-block;
+            padding-right: .5em;
+        }
+
+        .tour-date {
+            color: #555;
+            width: 11%;
+            font-weight: bold;
+        }
+
+        .tour-city {
+            width: 24%;
+        }
+
+        .tour-arena {
+            width: 42%;
+        }
+
+        .tour-btn {
+            max-width: 19%;
+        }
+
+        .shop-item {
+            margin: 30px;
+        }
+
+        .shop-item-title {
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .shop-item-image {
+            height: 250px;
+        }
+
+        .shop-item-details {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+        }
+
+        .shop-item-price {
+            flex-grow: 1;
+            color: #333;
+        }
+
+        .shop-items {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .cart-header {
+            font-weight: bold;
+            font-size: 1.25em;
+            color: #333;
+        }
+
+        .cart-column {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid black;
+            margin-right: 1.5em;
+            padding-bottom: 10px;
+            margin-top: 10px;
+        }
+
+        .cart-row {
+            display: flex;
+        }
+
+        .cart-item {
+            width: 45%;
+        }
+
+        .cart-price {
+            width: 20%;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .cart-quantity {
+            width: 35%;
+        }
+
+        .cart-item-title {
+            color: #333;
+            margin-right: .5em;
+            font-size: 1.2em;
+        }
+
+        .cart-item-image {
+            width: 75px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .btn-danger {
+            color: white;
+            background-color: #EB5757;
+            border: none;
+            border-radius: .3em;
+            font-weight: bold;
+        }
+
+            .btn-danger:hover {
+                background-color: #CC4C4C;
+            }
+
+        .cart-quantity-input {
+            height: 34px;
+            width: 50px;
+            border-radius: 5px;
+            border: 1px solid #56CCF2;
+            background-color: #eee;
+            color: #333;
+            padding: 0;
+            text-align: center;
+            font-size: 1.2em;
+            margin-left: 25px;
+        }
+
+        .cart-row:last-child {
+            border-bottom: 1px solid black;
+        }
+
+            .cart-row:last-child .cart-column {
+                border: none;
+            }
+
+        .cart-total {
+            text-align: start;
+            margin-top: 10px;
+            margin-left: 10px;
+        }
+
+        .cart-total-title {
+            font-weight: bold;
+            font-size: 1.5em;
+            color: black;
+            margin-left: 20px;
+        }
+
+        .cart-total-price {
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .btn-purchase {
+            display: block;
+            margin: 40px auto 80px auto;
+            padding: 20px 50px 20px 50px;
+            font-size: 1.75em;
+        }
+    </style>
+
+</head>
+<body dir="rtl">
+    <header class="main-header">
+        <!--menu up: HOME and STORE-->
+        <nav class="main-nav nav">
+            <ul>
+                <li><input type="button" value="דף הבית" onclick="logOut()" /></li>
+                <li><input type="button" value="החנות" onclick="refresh()" /></li>
+                <li><i class="fa fa-user w3-text-white"></i> <span id="user_name"></span></li>
+            </ul>
+        </nav>
+
+        <!--title-->
+        <h1 class="band-name band-name-large">Easy Buy</h1>
+    </header>
+
+    <!--images Gallery, 2 in line-->
+    <section class="container content-section">
+        <h2 class="section-header">משקאות חמים</h2>
+        <div class="shop-items">
+            <div class="shop-item">
+                <span class="shop-item-title">אספרסו</span>
+                <img class="shop-item-image" src="Images/אספרסו.png">
+                <div class="shop-item-details">
+                    <span class="shop-item-price">19.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button">הוסף לקנייה</button>
+                </div>
+            </div>
+            <div class="shop-item">
+                <span class="shop-item-title">קפוצ'ינו</span>
+                <img class="shop-item-image" src="Images/קפוצ'ינו.png">
+                <div class="shop-item-details">
+                    <span class="shop-item-price">6.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button">הוסף לקנייה</button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title">שוקו פרלינים</span>
+                <img class="shop-item-image" src="Images/שוקו פרלינים.png">
+                <div class="shop-item-details">
+                    <span class="shop-item-price">9.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button">הוסף לקנייה</button>
+                </div>
+            </div>
+            <div class="shop-item">
+                <span class="shop-item-title">תה נענע</span>
+                <img class="shop-item-image" src="Images/תה נענע.png">
+                <div class="shop-item-details">
+                    <span class="shop-item-price">16.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button">הוסף לקנייה</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--Cart-->
+    <section class="container content-section">
+        <h2 class="section-header">פרטי הקנייה</h2>
+        <div class="cart-row">
+            <span class="cart-item cart-header cart-column">הזמנה</span>
+            <span class="cart-price cart-header cart-column">מחיר</span>
+            <span class="cart-quantity cart-header cart-column">כמות</span>
+        </div>
+
+        <div class="cart-items">
+            <!--add Dynamic Items-->
+        </div>
+
+        <div class="cart-total">
+            <strong class="cart-total-title">סה"כ:</strong>
+            <span class="cart-total-price">0</span>
+        </div>
+        <button class="btn btn-primary btn-purchase" type="button">קנייה</button>
+    </section>
+
+    <!---------------------------------------------------------------->
+    <!--script-->
+    <script>
+
+        let user = null;
+        let exist = false;
+
+        if (document.readyState == 'loading') {
+            document.addEventListener('DOMContentLoaded', ready);
+        }
+        else {
+            ready();
+        }
+
+        user = JSON.parse(localStorage.getItem("users")).find(x => x.user_name == sessionStorage.getItem("currentUser"));
+        $("#user_name").html(user.user_name);
+        //console.log(user);
+        //console.log(JSON.parse(localStorage.getItem("users")));
+
+        // logout
+        function logOut() {
+            sessionStorage.clear();
+            location.href = "Login.html";
+        }
+
+        // refresh
+        function refresh() {
+            location.href = "store.html";
+        }
+
+        // possibale to remove Item and change quantity
+        function ready() {
+
+            showAllProduct();
+            updeteTotalPrice();
+
+            var addToCartButtons = document.getElementsByClassName('shop-item-button');
+            for (var i = 0; i < addToCartButtons.length; i++) {
+                var button = addToCartButtons[i];
+                button.addEventListener('click', addToCartClicked);
+            }
+
+            document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked);
+        }
+
+        // purchase button click
+        function purchaseClicked() {
+            if ($('.cart-total-price').text() == 0) {
+                alert('אין פריטים בקנייה זו');
+            } else {
+                $('.cart-items').empty();
+                user.product.splice(0, user.product.length);
+                saveToStorage();
+                $('.cart-total-price').text(0);
+                alert('תודה על קנייתך');
+            }
+            updeteTotalPrice();
+        }
+
+        // remove Item
+        function removeCartItem(i) {
+            var remove = $('.btn-danger')[i].value;
+            user.product.splice(parseFloat(remove), 1);
+
+            updeteTotalPrice();
+            saveToStorage();
+            showAllProduct();
+        }
+
+        // quantity Changed and must to be more from 1
+        function quantityChanged(i) {
+
+            var updte = $('.cart-quantity-input')[i].value;
+            if (parseFloat(updte) <= 0) {
+                user.product[i].quantity = "1";
+            }
+            else {
+                user.product[i].quantity = updte;
+            }
+            updeteTotalPrice();
+            saveToStorage();
+            showAllProduct();
+        }
+
+        // add To Cart
+        function addToCartClicked(event) {
+            var button = event.target;
+            var shopItem = button.parentElement.parentElement;
+            var title = shopItem.getElementsByClassName('shop-item-title')[0].innerText;
+            var price = shopItem.getElementsByClassName('shop-item-price')[0].innerText;
+            var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src;
+
+            console.log(title, price, imageSrc);
+            addItemToCart(title, price, imageSrc);
+            if (exist == false) {
+                addToArray(title, price, imageSrc);
+                updeteTotalPrice();
+                showAllProduct();
+            }
+            else {
+                exist = false;
+            }
+        }
+
+        // add Item To Array
+        function addToArray(title, price, imageSrc) {
+            user.product.push({
+                title: title,
+                price: price,
+                imageSrc: imageSrc,
+                quantity: "1"
+            })
+            saveToStorage();
+        }
+
+        // show All Product
+        function showAllProduct() {
+            $('.cart-items').empty();
+
+            for (var i = 0; i < user.product.length; i++) {
+                var cartRowContents = `<div class="cart-row">
+                                                <div class="cart-item cart-column">
+                                                    <img class="cart-item-image" src="${user.product[i].imageSrc}" width="100" height="100">
+                                                    <span class="cart-item-title">${user.product[i].title}</span>
+                                                </div>
+                                                <span class="cart-price cart-column">${user.product[i].price}</span>
+                                                <div class="cart-quantity cart-column">
+                                                    <input class="cart-quantity-input" onchange="quantityChanged(${i})" type="number" value=${user.product[i].quantity}>
+                                                    <button class="btn btn-danger" onclick="removeCartItem(${i})" type="button">הסר</button>
+                                                </div>
+                                          </div>`;
+
+                $('.cart-items').append(cartRowContents);
+            }
+        }
+
+        // add Item To Cart
+        function addItemToCart(title, price, imageSrc) {
+
+            for (var i = 0; i < user.product.length; i++) {
+                if (user.product[i].title == title) {
+                    alert('כבר קיים בסל הקניות');
+                    exist = true;
+                    return;
+                }
+            }
+        }
+
+        // updete Total Price
+        function updeteTotalPrice() {
+            var total = 0;
+            for (var i = 0; i < user.product.length; i++) {
+                var priceElement = parseFloat(user.product[i].price);
+                var quantityElement = parseFloat(user.product[i].quantity);
+                total = total + (priceElement * quantityElement);
+            }
+            // 2 numbers after dot, for example: 3.98
+            total = Math.round(total * 100) / 100;
+            $('.cart-total-price').text(total);
+        }
+
+        // save To Storage
+        function saveToStorage() {
+            let users = JSON.parse(localStorage.getItem("users"))
+            users.find(x => x.user_name == user.user_name).product = user.product;
+            localStorage.setItem("users", JSON.stringify(users));
+        }
+
+    </script>
+
+</body>
+</html>

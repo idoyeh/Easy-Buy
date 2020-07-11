@@ -1,0 +1,269 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8" />
+    <title>Easy Buy</title>
+    <link href="lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="lib/jquery.js"></script>
+    <link href="lib/w3.css" rel="stylesheet" />
+
+    <!---------------------------------------------------------------->
+    <!--style-->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: no-repeat center center fixed;
+            background-image: url('pic/coffeBackground.jpg');
+            background-size: cover;
+            font-family: sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        #msg {
+            margin: 0 auto 31px auto;
+            width: 80%;
+            color: red;
+        }
+
+        .tittle {
+            margin-top: 30px;
+            color: rgba(40, 20, 40, 0.9);
+            font-size: 75px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .bottom_slogen {
+            color: rgba(40, 20, 40, 1);
+            margin-top: 60px;
+        }
+
+        .form-box {
+            width: 500px;
+            background: rgba(0,0,0,0.8);
+            margin: 40px auto 50px auto;
+            padding: 20px 0;
+            color: #fff;
+            box-shadow: 0 0 20px 2px rgba(0,0,0,0.5);
+        }
+
+        .input-box {
+            margin: 31px auto 10px auto;
+            width: 80%;
+            border-bottom: 1px solid #fff;
+            padding-top: 10px;
+            padding-bottom: 5px;
+        }
+
+            .input-box input {
+                width: 90%;
+                border: none;
+                outline: none;
+                background: transparent;
+                color: #fff;
+            }
+
+        input[placeholder] {
+            color: #cccccc;
+        }
+
+        .fa {
+            margin-left: 10px;
+        }
+
+        .eye {
+            position: absolute;
+        }
+
+        #hide1 {
+            display: none;
+        }
+
+        .login-btn {
+            margin: 40px auto 20px;
+            width: 80%;
+            display: block;
+            outline: none;
+            padding: 10px 0;
+            border: 1px solid #fff;
+            cursor: pointer;
+            background: transparent;
+            color: #fff;
+            font-size: 16px;
+        }
+
+            .login-btn:hover {
+                background: rgba(20,20,20,0.8);
+                color: #ccc;
+            }
+
+        .new-user-btn {
+            margin: 40px auto 0;
+            width: 20%;
+            display: block;
+            outline: none;
+            padding: 10px 0;
+            border: 1px solid #fff;
+            cursor: pointer;
+            background: transparent;
+            color: #fff;
+            font-size: 12px;
+        }
+
+            .new-user-btn:hover {
+                background: rgba(20,20,20,0.8);
+                color: #ccc;
+            }
+    </style>
+
+    <!---------------------------------------------------------------->
+    <script>
+        // const variable
+        let MESSAGE = ["שם משתמש כבר קיים", "שדות ריקים, יש למלא", "נרשמת בהצלחה", "פרטי כניסה אינם נכונים"];
+        let users = undefined;
+        let user_name = null;
+        let my_password = null;
+
+        $(document).ready(init);
+
+        //localStorage.clear();
+
+        // Hide password function
+        function HidePassword() {
+            var x = document.getElementById("my_password");
+            var y = document.getElementById("hide1");
+            var z = document.getElementById("hide2");
+
+            if (x.type === 'password') {
+                x.type = "text";
+                y.style.display = "block";
+                z.style.display = "none";
+            }
+            else {
+                x.type = "password";
+                y.style.display = "none";
+                z.style.display = "block";
+            }
+
+        }
+
+        // init function, Get to "users", include: users[]
+        function init() {
+            users = JSON.parse(localStorage.getItem("users"));
+            if (users == null) {
+                users = [];
+            }
+            console.log(users);
+        }
+
+        // Login function, move(Set) "currentUser" include user_name -> (String)
+        function Login() {
+
+            clearMsg();
+            setUserNameAndPassword();
+
+            let user = users.find(x => x.user_name == user_name && x.my_password == my_password);
+            if (user != null) {
+                sessionStorage.setItem("currentUser", user_name);
+                MoveBuyScreen();
+            }
+            else {
+                $("#msg").text(MESSAGE[3]).css("color", "red");
+            }
+
+        }
+
+        // MoveBuyScreen function
+        function MoveBuyScreen() {
+            //window.location.href = 'Buy.html';
+            window.location.href = 'store.html';
+        }
+
+        // Register function, move(Set) "users" include: {user_name, my_password, product[]} -> (Object)
+        function Registration() {
+
+            clearMsg();
+            setUserNameAndPassword();
+
+            let user = users.find(x => x.user_name == user_name);
+            if (user != null) {
+                $("#msg").text(MESSAGE[0]).css("color", "red");
+            }
+            else if (my_password == "" || user_name == "") {
+                $("#msg").text(MESSAGE[1]).css("color", "red");
+            }
+            else {
+                users.push({
+                    user_name: user_name,
+                    my_password: my_password,
+                    product: []
+                });
+
+                localStorage.setItem("users", JSON.stringify(users));
+                $("#msg").text(MESSAGE[2]).css("color", "green");
+            }
+        }
+
+        // clearMsg function
+        function clearMsg() {
+            $("#msg").text("");
+        }
+
+        // setUserNameAndPassword function
+        function setUserNameAndPassword() {
+            user_name = $("#user_name").val();
+            my_password = $("#my_password").val();
+        }
+
+    </script>
+</head>
+<body dir="rtl">
+
+    <!--title-->
+    <div>
+        <h1 class="tittle">Easy Buy</h1>
+    </div>
+
+    <!--insert user name and password, and click login button-->
+    <div class="form-box">
+        <h1>התחברות</h1>
+
+        <div class="input-box">
+            <i class="fa fa-user"></i>
+            <input type="text" id="user_name" placeholder="שם משתמש" required />
+        </div>
+
+        <div class="input-box">
+            <i class="fa fa-key"></i>
+            <input type="password" placeholder="סיסמא" id="my_password" required />
+            <span class="eye" onclick="HidePassword()">
+                <i id="hide1" class="fa fa-eye"></i>
+                <i id="hide2" class="fa fa-eye-slash"></i>
+            </span>
+        </div>
+
+        <p id="msg"></p>
+
+        <button type="button" class="login-btn" onclick="Login()">כניסה</button>
+
+        <!--click register button-->
+        <div>
+            <button type="button" class="new-user-btn" onclick="Registration()">משתמש חדש?</button>
+        </div>
+    </div>
+
+    <!--slogen-->
+    <div>
+        <h1 class="bottom_slogen">Easy To Buy</h1>
+    </div>
+
+</body>
+</html>
